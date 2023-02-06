@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Employee_Nexus.iml" filepath="$PROJECT_DIR$/.idea/modules/Employee_Nexus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.iml" />
+    </modules>
+  </component>
+</project>
