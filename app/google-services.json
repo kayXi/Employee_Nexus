@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969067203527",
+    "project_id": "employee-nexus",
+    "storage_bucket": "employee-nexus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969067203527:android:455941c6fcdd0550cf67e2",
+        "android_client_info": {
+          "package_name": "com.example.employee_nexus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969067203527-g3p3n7h4tkqiisi9ss1b9sngk59fiu21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEXDdgyJ9iAKU1RmAetZIyk-xdUpT5sIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969067203527-g3p3n7h4tkqiisi9ss1b9sngk59fiu21.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
