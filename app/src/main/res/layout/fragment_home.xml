@@ -16,82 +16,98 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeAnnouncements" />
+        app:layout_constraintTop_toBottomOf="@+id/homeAnnouncements"
+        app:layout_constraintVertical_bias="0.776" />
 
     <TextView
         android:id="@+id/homeNews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="News and Announcements"
+        android:layout_marginTop="68dp"
+        android:text="@string/news_and_announcements"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/homeImg" />
 
     <ImageView
         android:id="@+id/homeImg"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/templogo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeNews" />
+        app:layout_constraintTop_toBottomOf="@+id/homeName" />
 
     <TextView
         android:id="@+id/homeAnnouncements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
+        android:text="API needed for rotating news to be displayed here"
         android:textColor="@color/black"
-        android:text="                                APP DESCRIPTION HERE "
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeDays" />
+        app:layout_constraintTop_toBottomOf="@+id/homeNews" />
 
     <TextView
         android:id="@+id/homeName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
         android:paddingStart="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/homeID"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeImg" />
+        app:layout_constraintStart_toEndOf="@+id/homeWelcome"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/homeID"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/homeName"
-        app:layout_constraintTop_toBottomOf="@+id/homeImg" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/homeDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
         android:paddingStart="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.009"
+        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeID" />
+        app:layout_constraintTop_toBottomOf="@+id/homeImg" />
+
+    <TextView
+        android:id="@+id/homeWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Welcome "
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

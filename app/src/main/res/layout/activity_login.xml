@@ -46,6 +46,7 @@
         android:id="@+id/imageView"
         android:layout_width="331dp"
         android:layout_height="165dp"
+        android:src="@drawable/templogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
