@@ -7,6 +7,11 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Employee_Nexus.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Projects.Employee_Nexus.iml" filepath="$PROJECT_DIR$/.idea/modules/Projects.Employee_Nexus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Projects.Employee_Nexus.app.unitTest.iml" />
     </modules>
   </component>
 </project>

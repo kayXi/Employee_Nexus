@@ -2,15 +2,21 @@ package com.example.employee_nexus.ui.home;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,7 +31,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class HomeFragment extends Fragment {
 
@@ -35,6 +55,9 @@ public class HomeFragment extends Fragment {
     private TextView hName;
     private TextView hID;
     private TextView hDays;
+    private TextView hNews;
+    private ImageView hNewsImage;
+    private Context con;
     private ListenerRegistration lr;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,7 +68,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        hName = (TextView)binding.homeName;
+        hName = (TextView) binding.homeName;
         hID = (TextView) binding.homeID;
         hDays = (TextView) binding.homeDays;
 
@@ -61,17 +84,68 @@ public class HomeFragment extends Fragment {
                         Log.w("homepage", "Listen failed.", e);
                         return;
                     }
-                    if (snapshot!= null && snapshot.exists()){
-                        Log.d("homepage","Current data: " + snapshot.getData());
+                    if (snapshot != null && snapshot.exists()) {
+                        Log.d("homepage", "Current data: " + snapshot.getData());
                         hName.setText("" + snapshot.get("name"));
                         hID.setText("" + snapshot.get("emp_id"));
                         hDays.setText("Paid Days " + snapshot.get("paid_days") + "\t\tUnpaid Days " + snapshot.get("unpaid_days") + "\t\tUnexcused Days " + snapshot.get("unexcused"));
 
-                    }
-                    else {
-                        Log.d("homepage","Current data: null");
+                    } else {
+                        Log.d("homepage", "Current data: null");
                     }
                 });
+
+        //news & announcements
+        hNews = (TextView) binding.homeAnnouncements;
+        hNewsImage = (ImageView) binding.homeAnnouncementsImg;
+
+        //API will return a JSON that contains news information
+        //for the moment, it's the file located at https://newsdata.io/api/1/news?apikey=pub_16894052405df02e4c531ab8c582e36006da9&q=nexus
+        //this api key only has 200 daily accesses allowed
+
+        try {
+            //Log.w("homepage", "begin try block");
+            URL conn = new URL("https://newsdata.io/api/1/news?apikey=pub_16894052405df02e4c531ab8c582e36006da9&q=nexus");
+            //Log.w("homepage", "URL connected");
+            BufferedReader apiResult = new BufferedReader(new InputStreamReader(conn.openStream())); //// this line breaks everything for some reason, even though this code works correctly
+            //Log.w("homepage", "buffered reader on input stream");
+            StringBuilder sb = new StringBuilder();
+            //Log.w("homepage", "string builder initialized");
+            String line = null;
+            //Log.w("homepage", "beginning string building");
+
+            while ((line = apiResult.readLine()) != null) {
+                sb.append(line);
+            }
+            //Log.w("homepage", "string built");
+            apiResult.close();
+            //Log.w("homepage", "stream closed");
+            String apiJSON = sb.toString();
+            //Log.w("homepage", "string generated");
+
+            JSONObject obj = new JSONObject(apiJSON);
+        String status = obj.getString("status");
+        JSONArray articles = obj.getJSONArray("results");
+        Integer articleCount = obj.getInt("totalResults");
+
+        //within the first entry of the JSON array is the article we want to display
+        JSONObject article = articles.getJSONObject(0);
+        hNews.setText(article.getString("title"));
+        Uri.Builder builder = new Uri.Builder();
+        builder.appendEncodedPath(article.getString("image_url"));
+        Uri imageLocation = builder.build(); //this is the only part of this code that I can't verify externally as being correct. everything else works properly. this part is never reached.
+        hNewsImage.setImageURI(imageLocation);
+
+        } catch (MalformedURLException e) {
+            Log.w("homepage", "API URL is wrong");
+        } catch (UnsupportedEncodingException e) {
+            Log.w("homepage", "Encoding is wrong");
+        } catch (JSONException e) {
+            Log.w("homepage", "JSON issue");
+        } catch (IOException e) {
+            Log.w("homepage", "IO issue");
+        }
+
 
         return root;
     }

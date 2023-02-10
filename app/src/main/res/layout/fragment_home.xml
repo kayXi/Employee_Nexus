@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeAnnouncements"
+        app:layout_constraintTop_toBottomOf="@+id/homeAnnouncementsImg"
         app:layout_constraintVertical_bias="0.776" />
 
     <TextView
@@ -55,8 +55,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:text="API needed for rotating news to be displayed here"
-        android:textColor="@color/black"
         android:textAlignment="center"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +108,18 @@
         android:text="Welcome "
         android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/homeAnnouncementsImg"
+        android:layout_width="221dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="434dp"
+        android:layout_marginEnd="95dp"
+        android:src="@drawable/templogo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
