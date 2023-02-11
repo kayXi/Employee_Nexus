@@ -6,6 +6,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -99,6 +100,9 @@ public class HomeFragment extends Fragment {
         hNews = (TextView) binding.homeAnnouncements;
         hNewsImage = (ImageView) binding.homeAnnouncementsImg;
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        
         //API will return a JSON that contains news information
         //for the moment, it's the file located at https://newsdata.io/api/1/news?apikey=pub_16894052405df02e4c531ab8c582e36006da9&q=nexus
         //this api key only has 200 daily accesses allowed
