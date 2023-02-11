@@ -58,6 +58,8 @@ public class HomeFragment extends Fragment {
     private TextView hDays;
     private TextView hNews;
     private ImageView hNewsImage;
+    private TextView hWeather;
+
     private Context con;
     private ListenerRegistration lr;
 
@@ -102,16 +104,17 @@ public class HomeFragment extends Fragment {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        
+
         //API will return a JSON that contains news information
         //for the moment, it's the file located at https://newsdata.io/api/1/news?apikey=pub_16894052405df02e4c531ab8c582e36006da9&q=nexus
         //this api key only has 200 daily accesses allowed
+        //setting up this section to run asynchronously should solve loading time on homepage issue
 
         try {
             //Log.w("homepage", "begin try block");
-            URL conn = new URL("https://newsdata.io/api/1/news?apikey=pub_16894052405df02e4c531ab8c582e36006da9&q=nexus");
+            URL conn = new URL("https://newsdata.io/api/1/news?apikey=pub_16894052405df02e4c531ab8c582e36006da9&q=math");
             //Log.w("homepage", "URL connected");
-            BufferedReader apiResult = new BufferedReader(new InputStreamReader(conn.openStream())); //// this line breaks everything for some reason, even though this code works correctly
+            BufferedReader apiResult = new BufferedReader(new InputStreamReader(conn.openStream()));
             //Log.w("homepage", "buffered reader on input stream");
             StringBuilder sb = new StringBuilder();
             //Log.w("homepage", "string builder initialized");
@@ -136,8 +139,8 @@ public class HomeFragment extends Fragment {
         JSONObject article = articles.getJSONObject(0);
         hNews.setText(article.getString("title"));
         Uri.Builder builder = new Uri.Builder();
-        builder.appendEncodedPath(article.getString("image_url"));
-        Uri imageLocation = builder.build(); //this is the only part of this code that I can't verify externally as being correct. everything else works properly. this part is never reached.
+        builder.appendPath(article.getString("image_url"));
+        Uri imageLocation = builder.build();
         hNewsImage.setImageURI(imageLocation);
 
         } catch (MalformedURLException e) {
@@ -149,6 +152,49 @@ public class HomeFragment extends Fragment {
         } catch (IOException e) {
             Log.w("homepage", "IO issue");
         }
+
+        // @+id/homeWeather
+        // http://api.weatherapi.com/v1/current.json?key=dd5f1b9da9564f74af5162742231102&q=17057&aqi=no
+
+        hWeather = (TextView) binding.homeWeather;
+
+        try {
+            Log.w("homepage", "begin try block");
+            URL conn2 = new URL("http://api.weatherapi.com/v1/current.json?key=dd5f1b9da9564f74af5162742231102&q=17057&aqi=no");
+            Log.w("homepage", "URL connected");
+            BufferedReader weatherApiResult = new BufferedReader(new InputStreamReader(conn2.openStream()));
+            Log.w("homepage", "buffered reader on input stream");
+            StringBuilder sb2 = new StringBuilder();
+            Log.w("homepage", "string builder initialized");
+            String line = null;
+            Log.w("homepage", "beginning string building");
+
+            while ((line = weatherApiResult.readLine()) != null) {
+                sb2.append(line);
+            }
+            //Log.w("homepage", "string built");
+            weatherApiResult.close();
+            //Log.w("homepage", "stream closed");
+            String apiJSON = sb2.toString();
+            //Log.w("homepage", "string generated");
+
+            JSONObject currentWeatherObj = new JSONObject(apiJSON);
+            currentWeatherObj = currentWeatherObj.getJSONObject("current");
+            Double currentTemp = currentWeatherObj.getDouble("temp_f");
+
+            Log.w("homepage", "temp is " + currentTemp.toString());
+            hWeather.setText(currentTemp.toString());
+
+        } catch (MalformedURLException e) {
+            Log.w("homepage", "API URL is wrong");
+        } catch (UnsupportedEncodingException e) {
+            Log.w("homepage", "Encoding is wrong");
+        } catch (JSONException e) {
+            Log.w("homepage", "JSON issue");
+        } catch (IOException e) {
+            Log.w("homepage", "IO issue");
+        }
+
 
 
         return root;
