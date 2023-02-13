@@ -26,12 +26,12 @@
     <fragment
         android:id="@+id/navigation_clockIn"
         android:name="com.example.employee_nexus.ui.clockIn.ClockInFragment"
-        android:label="Clock In"
+        android:label="Clock-In"
         tools:layout="@layout/fragment_clockin" />
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.example.employee_nexus.ui.history.HistoryFragment"
-        android:label="@string/title_history"
-        tools:layout="@layout/fragment_history" />
+        android:name="com.example.employee_nexus.ui.schedule.ScheduleFragment"
+        android:label="Schedule"
+        tools:layout="@layout/fragment_schedule" />
 </navigation>
