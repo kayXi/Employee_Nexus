@@ -16,4 +16,14 @@
         android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/title_history" />
 
+    <item
+        android:id="@+id/navigation_clockIn"
+        android:icon="@drawable/userbutton"
+        android:title="Clock In" />
+
+    <item
+        android:id="@+id/navigation_schedule"
+        android:icon="@drawable/calendarbutton"
+        android:title="Schedule" />
+
 </menu>
