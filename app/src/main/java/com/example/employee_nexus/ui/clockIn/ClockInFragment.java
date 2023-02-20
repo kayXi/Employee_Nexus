@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.employee_nexus.Employees;
 import com.example.employee_nexus.MainActivity;
 import com.example.employee_nexus.databinding.FragmentClockinBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,7 +37,17 @@ import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -43,13 +55,17 @@ public class ClockInFragment extends Fragment {
 
     private FragmentClockinBinding binding;
 
+    private FirebaseFirestore db;
+    private String userId;
     FusedLocationProviderClient fusedLocationProviderClient;
     //TextView latitude,longitude;
     private double latitude,longitude;
-    private final double LAT =40.342297;
+    private final double LAT =40.3043596;
     //40.3043596 Home Lat
-    private final double LONG=-75.978435;
+    //Walmart nearby lat 40.342297
+    private final double LONG=-76.0010342;
     //Home Long -76.0010342
+    //Walmart nearby long -75.978435
     Button gpsCheck;
     private final static int REQUEST_CODE = 100;
     private final static Logger LOGGER =
@@ -67,6 +83,10 @@ public class ClockInFragment extends Fragment {
 //        longitude = binding.clockInLong;
         gpsCheck = binding.gpsButton;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        //Create database instance
+        db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         gpsCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,9 +147,9 @@ public class ClockInFragment extends Fragment {
                         double distance = distanceCheck(LAT, LONG, latitude, longitude);
                         LOGGER.info("Distance between marked location and current: "+ distance);
                         if(distance >= 0 && distance <=50){
-                            //TODO Make an entry into the database to show a clock in for the employee
+                            gpsClockIn();
                         }else{
-
+                            Toast.makeText(getActivity(),"Too far away from location, try again when closer",Toast.LENGTH_LONG).show();
                         }
                     }else{
                         //Initialize location Request
@@ -150,6 +170,11 @@ public class ClockInFragment extends Fragment {
                                 longitude = location.getLongitude();
                                 double distance = distanceCheck(LAT, LONG, latitude, longitude);
                                 LOGGER.info("Distance between marked location and current: "+ distance);
+                                if(distance >= 0 && distance <=50){
+                                    gpsClockIn();
+                                }else{
+                                    Toast.makeText(getActivity(),"Too far away from location, try again when closer",Toast.LENGTH_LONG).show();
+                                }
                             }
                         };
                         //Request location updates
@@ -177,6 +202,37 @@ public class ClockInFragment extends Fragment {
         distance = radius * res2;
 
         return distance * 1000; // distance in meters
+    }
+
+    public void gpsClockIn(){
+        db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        userId = user.getUid();
+        //Hashmap to hold information for database entry
+        Map<String,Object> record = new HashMap<>();
+
+        //Pull employee information from database store in hashmap
+        DocumentReference docRef = db.collection("Employees").document(userId);
+        docRef.get().addOnCompleteListener(task ->{
+            DocumentSnapshot doc = task.getResult();
+            if(doc.exists()){
+                Employees currEmp = doc.toObject(Employees.class);
+                record.put("emp_id",currEmp.getEmp_id());
+                record.put("name",currEmp.getName());
+                record.put("timestamp",new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(new Date()));
+            }
+            else{
+                Log.d("Document", "No data");
+            }
+        });
+
+        //Add clock-in to the database
+        db.collection("Clock-Ins").document(userId).collection("history").add(record).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(getActivity(),"Clock-In Successful!",Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(e -> Toast.makeText(getActivity(),"Failed to Clock-In, Check Connection",Toast.LENGTH_LONG).show());
     }
     @Override
     public void onDestroyView() {
