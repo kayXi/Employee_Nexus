@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvCurrentDate"
+        android:text="2023-02-18"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="#fd5f00"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:background="#f6f6e9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvPreMonth"
+            android:padding="5dp"
+            android:text="last month"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:background="#000"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tvNextMonth"
+            android:text="next month"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:background="#000"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:background="#000"
+        android:padding="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginRight="1dp"
+            android:background="#fff"
+            android:text="Monday"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginRight="1dp"
+            android:background="#fff"
+            android:text="Tuesday"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginRight="1dp"
+            android:background="#fff"
+            android:text="Wednesday"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginRight="1dp"
+            android:background="#fff"
+            android:text="Thursday"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginRight="1dp"
+            android:background="#fff"
+            android:text="Friday"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginRight="1dp"
+            android:background="#fff"
+            android:text="Saturday"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginRight="1dp"
+            android:background="#fff"
+            android:text="Sunday"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gv"
+        android:numColumns="7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </GridView>
+
+</LinearLayout>
