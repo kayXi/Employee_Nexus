@@ -36,15 +36,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.logging.Logger;
+
 
 public class ClockInFragment extends Fragment {
 
     private FragmentClockinBinding binding;
 
     FusedLocationProviderClient fusedLocationProviderClient;
-    TextView latitude,longitude;
+    //TextView latitude,longitude;
+    private double latitude,longitude;
+    private final double LAT =40.342297;
+    //40.3043596 Home Lat
+    private final double LONG=-75.978435;
+    //Home Long -76.0010342
     Button gpsCheck;
     private final static int REQUEST_CODE = 100;
+    private final static Logger LOGGER =
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +63,8 @@ public class ClockInFragment extends Fragment {
         binding = FragmentClockinBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        latitude = binding.clockInLat;
-        longitude = binding.clockInLong;
+//        latitude = binding.clockInLat;
+//        longitude = binding.clockInLong;
         gpsCheck = binding.gpsButton;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
@@ -111,8 +120,17 @@ public class ClockInFragment extends Fragment {
                     if(location!= null){
                         // When location result is not null
                         //Set latitude & longitude
-                        latitude.setText(String.valueOf(location.getLatitude()));
-                        longitude.setText(String.valueOf(location.getLongitude()));
+//                        latitude.setText(String.valueOf(location.getLatitude()));
+//                        longitude.setText(String.valueOf(location.getLongitude()));
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        double distance = distanceCheck(LAT, LONG, latitude, longitude);
+                        LOGGER.info("Distance between marked location and current: "+ distance);
+                        if(distance >= 0 && distance <=50){
+                            //TODO Make an entry into the database to show a clock in for the employee
+                        }else{
+
+                        }
                     }else{
                         //Initialize location Request
                         LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,1000).
@@ -126,8 +144,12 @@ public class ClockInFragment extends Fragment {
                             public void onLocationResult(@NonNull LocationResult locationResult) {
                                 Location location1 = locationResult.getLastLocation();
                                 //Set latitude & longitude
-                                latitude.setText(String.valueOf(location1.getLatitude()));
-                                longitude.setText(String.valueOf(location1.getLongitude()));
+//                                latitude.setText(String.valueOf(location1.getLatitude()));
+//                                longitude.setText(String.valueOf(location1.getLongitude()));
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+                                double distance = distanceCheck(LAT, LONG, latitude, longitude);
+                                LOGGER.info("Distance between marked location and current: "+ distance);
                             }
                         };
                         //Request location updates
@@ -142,6 +164,20 @@ public class ClockInFragment extends Fragment {
         }
     }
 
+    private double distanceCheck(double coordLat, double coordLong,double currLat, double currLong ){
+        //Haversine Formula to determine the distance between to positions according to lat/long
+        double distance = 0;
+        double radius = 6378.137;
+        double latCheck = currLat * Math.PI / 180 - coordLat * Math.PI / 180;
+        double longCheck= currLong * Math.PI / 180 - coordLong * Math.PI / 180;
+        double res = Math.sin(latCheck/2)* Math.sin(latCheck/2) +
+                Math.cos(coordLat * Math.PI/180) * Math.cos(currLat*Math.PI/180) *
+                Math.sin(longCheck/2) * Math.sin(longCheck/2);
+        double res2 = 2 * Math.atan2(Math.sqrt(res),Math.sqrt(1-res));
+        distance = radius * res2;
+
+        return distance * 1000; // distance in meters
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
