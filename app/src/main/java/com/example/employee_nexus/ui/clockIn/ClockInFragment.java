@@ -220,19 +220,20 @@ public class ClockInFragment extends Fragment {
                 record.put("emp_id",currEmp.getEmp_id());
                 record.put("name",currEmp.getName());
                 record.put("timestamp",new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(new Date()));
+                //Add clock-in to the database
+                db.collection("Clock-Ins").document(userId).collection("history").add(record).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getActivity(),"Clock-In Successful!",Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(e -> Toast.makeText(getActivity(),"Failed to Clock-In, Check Connection",Toast.LENGTH_LONG).show());
             }
             else{
                 Log.d("Document", "No data");
             }
         });
 
-        //Add clock-in to the database
-        db.collection("Clock-Ins").document(userId).collection("history").add(record).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getActivity(),"Clock-In Successful!",Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(e -> Toast.makeText(getActivity(),"Failed to Clock-In, Check Connection",Toast.LENGTH_LONG).show());
+
     }
     @Override
     public void onDestroyView() {
